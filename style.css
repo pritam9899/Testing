@@ -56,3 +56,59 @@ button:hover {
     margin-top: 15px;
     color: #e74c3c;
 }
+/**************/
+
+.course-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+.course-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.course-title {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.course-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.course-fee {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+.original-fee {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 8px;
+}
+
+.discounted-fee {
+    color: #e60000;
+}
+
+.special-note {
+    font-size: 12px;
+    color: #ff5733;
+    margin-top: 10px;
+}
+

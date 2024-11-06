@@ -8,7 +8,7 @@ async function fetchData() {
         if (!response.ok) throw new Error("Network response was not ok");
         
         const data = await response.json(); // Parse JSON data
-        displayData(data.courses); // Call function to display the data
+        displayData(data); // Call function to display the data
     } catch (error) {
         document.getElementById("dataDisplay").textContent = "Error fetching data.";
         console.error("Fetch error: ", error);
@@ -22,11 +22,12 @@ async function fetchData() {
 // }
 
 function displayData(courseData) {
-    alert(courseData.length);
+    const dataforCards=courseData.courses;
+    alert(dataforCards.length);
     const container = document.getElementById("course-container");
     container.innerHTML = ""; // Clear any existing content
 
-    courseData.forEach(course => {
+    dataforCards.forEach(course => {
         // Create a card for each course
         const card = document.createElement("div");
         card.className = "course-card";

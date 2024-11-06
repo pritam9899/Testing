@@ -8,6 +8,9 @@ function login() {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("username", username);
         displayLogout();
+        document.getElementById("username").value="";
+        document.getElementById("password").value="";
+        message.textContent = "";
     } else {
         message.textContent = "Invalid credentials. Try again!";
     }

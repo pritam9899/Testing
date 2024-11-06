@@ -33,7 +33,7 @@ function displayData(courseData) {
 
         // Add a thumbnail image
         const thumbnail = document.createElement("img");
-        thumbnail.src = "data:image/png;base64,https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
+        thumbnail.src = "https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
         thumbnail.alt = "Course Thumbnail";
         thumbnail.className = "course-thumbnail";
         

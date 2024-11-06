@@ -17,6 +17,7 @@ async function fetchData() {
 
 function displayData(data) {
     // Display the JSON data in a readable format
+    alert(data.courses.length);
     document.getElementById("dataDisplay").textContent = data.courses.length;//+"_"+ JSON.stringify(data, null, 2);
 }
 

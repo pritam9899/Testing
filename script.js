@@ -23,6 +23,7 @@ function displayLogout() {
     document.getElementById("title").textContent = "Welcome";
     document.getElementById("user").textContent = localStorage.getItem("username");
     document.getElementById("message").textContent = "";
+    window.open("https://script.google.com/macros/s/AKfycbwTxwmARxYI1Oki41LF-0eYICkMfpzyVBkOdt5dt80evJpoa0dikS77BiONN0H6GhRB/exec");
 }
 
 // Logout function

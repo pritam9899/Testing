@@ -17,7 +17,7 @@ async function fetchData() {
 
 function displayData(data) {
     // Display the JSON data in a readable format
-    document.getElementById("dataDisplay").textContent = JSON.stringify(data, null, 2);
+    document.getElementById("dataDisplay").textContent = data.length+"_"+ JSON.stringify(data, null, 2);
 }
 
 // Call fetchData on page load

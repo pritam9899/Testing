@@ -8,7 +8,7 @@ async function fetchData() {
         if (!response.ok) throw new Error("Network response was not ok");
         
         const data = await response.json(); // Parse JSON data
-        displayData(data); // Call function to display the data
+        displayData(data.courses); // Call function to display the data
     } catch (error) {
         document.getElementById("dataDisplay").textContent = "Error fetching data.";
         console.error("Fetch error: ", error);

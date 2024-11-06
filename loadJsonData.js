@@ -22,6 +22,7 @@ async function fetchData() {
 // }
 
 function displayData(courseData) {
+    alert(courseData.length);
     const container = document.getElementById("course-container");
     container.innerHTML = ""; // Clear any existing content
 

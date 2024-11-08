@@ -107,10 +107,11 @@ async function loadDriveFile(fileId) {
                 if (xhr.status === 200) {
                     const mimeType = xhr.response.type;  // Get the MIME type of the file
                     const url = URL.createObjectURL(xhr.response);  // Create a URL for the file
-                    return url;
+                    
                     // Determine if it's an image or a video
                     if (mimeType.startsWith('image/')) {
                         displayImage(url);
+                        return url;
                     // } else if (mimeType.startsWith('video/')) {
                     //     // displayVideo(url);
                     // } else {

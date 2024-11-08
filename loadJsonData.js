@@ -45,7 +45,7 @@ function displayData(courseData) {
         // Add course description
         const description = document.createElement("p");
         description.className = "course-description";
-        description.textContent = course.description+"\n"+course.thumbnail_id;
+        description.textContent = course.description+"\n"+extractFileId(course.thumbnail_id);
         
         // Add fee with discount (if applicable)
         const fee = document.createElement("p");
@@ -77,6 +77,53 @@ function displayData(courseData) {
     });
 }
 
+function displayMedia(){
+
+}
+
+async function getFileUrl(fileURL) {
+    const fileId='1O0KOee9k2JTOt0JLjxnjcfJZ-VCUxOPF';
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbzHWOZhn1r6CxXTOgX4CYoaXjUtzEXLF9hrUlWEY5Jv2vSmBDvurk4MYWbfvxZezNz8Uw/exec';
+
+    try {
+            const response = await fetch(`${scriptUrl}?fileId=${fileId}`);
+            if (!response.ok) throw new Error('Network response was not ok.');
+                
+            const data = await response.json();
+            document.getElementById("fileUrl").innerText = data.url;
+            return data.url;
+    } catch (error) {
+            console.error('Error fetching file URL:', error);
+            document.getElementById("fileUrl").innerText = 'Error fetching file URL.';
+    }
+}
+
+function displayImage(url) {
+    const mediaContainer = document.getElementById('mediaContainerWrapper');
+    mediaContainer.innerHTML = '';  // Clear the container
+    const img = document.createElement('img');
+          img.src = url;
+          img.alt = "Loaded Image";
+          img.style.maxWidth = "100%";
+          mediaContainer.appendChild(img);
+}
+
+function extractFileId(url) {
+  const regex = /\/d\/(.*?)\/view/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+}
+
+// function displayVideo(url) {
+//     const mediaContainer = document.getElementById('mediaContainerWrapper');
+//           mediaContainer.innerHTML = '';  // Clear the container
+//     const video = document.createElement('video');
+//           video.src = url;
+//           video.controls = true;  // Enable controls
+//           video.autoplay = true;  // Autoplay video
+//           video.style.maxWidth = "100%";
+//           mediaContainer.appendChild(video);
+// }
 
 // Call fetchData on page load
 window.onload = fetchData;

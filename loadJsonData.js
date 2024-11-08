@@ -100,6 +100,7 @@ async function getFileUrl(fileId) {
 async function loadDriveFile(fileId) {
     // const apiKey = 'AIzaSyCIcIXGfsI8NMtAuDmDnOxNNVLkiSKc4Hk'; // Replace with your actual API key
     const driveUrl = await getFileUrl(fileId);//`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
+    alert("check drive url: "+driveUrl);
     const xhr = new XMLHttpRequest();
           xhr.open("GET", driveUrl, true);
           xhr.responseType = "blob";  // Fetch as binary large object (Blob)
@@ -107,7 +108,7 @@ async function loadDriveFile(fileId) {
                 if (xhr.status === 200) {
                     const mimeType = xhr.response.type;  // Get the MIME type of the file
                     const url = URL.createObjectURL(xhr.response);  // Create a URL for the file
-                    
+                    alert("check the display url: "+url);
                     // Determine if it's an image or a video
                     if (mimeType.startsWith('image/')) {
                         displayImage(url);

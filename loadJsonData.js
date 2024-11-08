@@ -47,6 +47,7 @@ function displayData(courseData) {
         
         // Load the actual image from Google Drive
         loadDriveFile(extractFileId(course.thumbnail_id), thumbnail);
+        displayImage2(extractFileId(course.thumbnail_id));
         
         // Add course name as the title
         const title = document.createElement("h2");
@@ -168,15 +169,15 @@ function displayImage(url, imgElement) {
 //           xhr.send();
 // }
 
-// function displayImage(url) {
-//     const mediaContainer = document.getElementById('mediaContainerWrapper');
-//     mediaContainer.innerHTML = '';  // Clear the container
-//     const img = document.createElement('img');
-//           img.src = url;
-//           img.alt = "Loaded Image";
-//           img.style.maxWidth = "100%";
-//           mediaContainer.appendChild(img);
-// }
+function displayImage2(url) {
+    const mediaContainer = document.getElementById('mediaContainerWrapper');
+    mediaContainer.innerHTML = '';  // Clear the container
+    const img = document.createElement('img');
+          img.src = "https://drive.google.com/uc?export=view&"+extractFileId(url);
+          img.alt = "Loaded Image";
+          img.style.maxWidth = "100%";
+          mediaContainer.appendChild(img);
+}
 
 function extractFileId(url) {
   const regex = /\/d\/(.*?)\/view/;

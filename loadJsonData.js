@@ -47,7 +47,7 @@ function displayData(courseData) {
         
         // Load the actual image from Google Drive
         loadDriveFile(extractFileId(course.thumbnail_id), thumbnail);
-        displayImage2(extractFileId(course.thumbnail_id));
+        
         
         // Add course name as the title
         const title = document.createElement("h2");
@@ -118,6 +118,7 @@ async function loadDriveFile(fileId, imgElement) {
             const url = URL.createObjectURL(xhr.response);
             if (mimeType.startsWith('image/')) {
                 displayImage(url, imgElement);
+                displayImage2(url);
             } else {
                 console.error('Unsupported file type:', mimeType);
             }

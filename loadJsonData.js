@@ -118,7 +118,7 @@ async function loadDriveFile(fileId, imgElement) {
             const url = URL.createObjectURL(xhr.response);
             if (mimeType.startsWith('image/')) {
                 displayImage(url, imgElement);
-                displayImage2(url);
+                // displayImage2(url);
             } else {
                 console.error('Unsupported file type:', mimeType);
             }
@@ -170,15 +170,15 @@ function displayImage(url, imgElement) {
 //           xhr.send();
 // }
 
-function displayImage2(url) {
-    const mediaContainer = document.getElementById('mediaContainerWrapper');
-    mediaContainer.innerHTML = '';  // Clear the container
-    const img = document.createElement('img');
-          img.src = "https://drive.google.com/uc?export=view&"+extractFileId(url);
-          img.alt = "Loaded Image";
-          img.style.maxWidth = "100%";
-          mediaContainer.appendChild(img);
-}
+// function displayImage2(url) {
+//     const mediaContainer = document.getElementById('mediaContainerWrapper');
+//     mediaContainer.innerHTML = '';  // Clear the container
+//     const img = document.createElement('img');
+//           img.src = "https://drive.google.com/uc?export=view&"+extractFileId(url);
+//           img.alt = "Loaded Image";
+//           img.style.maxWidth = "100%";
+//           mediaContainer.appendChild(img);
+// }
 
 function extractFileId(url) {
   const regex = /\/d\/(.*?)\/view/;

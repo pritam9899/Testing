@@ -45,7 +45,7 @@ function displayData(courseData) {
         // Add course description
         const description = document.createElement("p");
         description.className = "course-description";
-        description.textContent = course.description;
+        description.textContent = course.description+"\n"+course.thumbnail_id;
         
         // Add fee with discount (if applicable)
         const fee = document.createElement("p");

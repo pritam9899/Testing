@@ -21,7 +21,7 @@ async function fetchData() {
 //     document.getElementById("dataDisplay").textContent = data.courses.length;//+"_"+ JSON.stringify(data, null, 2);
 // }
 
-function displayData(courseData) {
+async function displayData(courseData) {
     const dataforCards=courseData.courses;
     const container = document.getElementById("course-container");
     container.innerHTML = ""; // Clear any existing content
@@ -33,7 +33,7 @@ function displayData(courseData) {
 
         // Add a thumbnail image
         const thumbnail_Id=extractFileId(course.thumbnail_id);
-        const thumbnail_imgURL=loadDriveFile(thumbnail_Id);
+        const thumbnail_imgURL=await loadDriveFile(thumbnail_Id);
         const thumbnail = document.createElement("img");
         thumbnail.src = thumbnail_imgURL;//"https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
         thumbnail.alt = "Course Thumbnail";

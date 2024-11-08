@@ -21,7 +21,7 @@ async function fetchData() {
 //     document.getElementById("dataDisplay").textContent = data.courses.length;//+"_"+ JSON.stringify(data, null, 2);
 // }
 
-async function displayData(courseData) {
+function displayData(courseData) {
     const dataforCards=courseData.courses;
     const container = document.getElementById("course-container");
     container.innerHTML = ""; // Clear any existing content
@@ -32,12 +32,21 @@ async function displayData(courseData) {
         card.className = "course-card";
 
         // Add a thumbnail image
-        const thumbnail_Id=extractFileId(course.thumbnail_id);
-        const thumbnail_imgURL=await loadDriveFile(thumbnail_Id);
+        // const thumbnail_Id=extractFileId(course.thumbnail_id);
+        // const thumbnail_imgURL=loadDriveFile(thumbnail_Id);
+        // const thumbnail = displayImage();//document.createElement("img");
+        // // thumbnail.src = thumbnail_imgURL;//"https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
+        // // thumbnail.alt = "Course Thumbnail";
+        // // thumbnail.className = "course-thumbnail";
+
+        // Add a placeholder for the thumbnail image
         const thumbnail = document.createElement("img");
-        thumbnail.src = thumbnail_imgURL;//"https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
+        thumbnail.src = ""; // Placeholder image
         thumbnail.alt = "Course Thumbnail";
         thumbnail.className = "course-thumbnail";
+        
+        // Load the actual image from Google Drive
+        loadDriveFile(extractFileId(course.thumbnail_id), thumbnail);
         
         // Add course name as the title
         const title = document.createElement("h2");
@@ -97,47 +106,77 @@ async function getFileUrl(fileId) {
     }
 }
 
-async function loadDriveFile(fileId) {
-    // const apiKey = 'AIzaSyCIcIXGfsI8NMtAuDmDnOxNNVLkiSKc4Hk'; // Replace with your actual API key
-    const driveUrl = await getFileUrl(fileId);//`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
-    
+async function loadDriveFile(fileId, imgElement) {
+    const driveUrl = await getFileUrl(fileId);
     const xhr = new XMLHttpRequest();
-          xhr.open("GET", driveUrl, true);
-          xhr.responseType = "blob";  // Fetch as binary large object (Blob)
-          xhr.onload = function () {
-                if (xhr.status === 200) {
-                    const mimeType = xhr.response.type;  // Get the MIME type of the file
-                    const url = URL.createObjectURL(xhr.response);  // Create a URL for the file
-                    
-                    // Determine if it's an image or a video
-                    if (mimeType.startsWith('image/')) {
-                        displayImage(url);
-                        alert("check the display url: "+url);
-                        return url;
-                    // } else if (mimeType.startsWith('video/')) {
-                    //     // displayVideo(url);
-                    // } else {
-                    //     console.error('Unsupported file type:', mimeType);
-                    }
-                } else {
-                    console.error(`Error: ${xhr.status}`);
-                }
-          };
-          xhr.onerror = function () {
-            console.error("Network error while retrieving the file.");
-          };
-          xhr.send();
+    xhr.open("GET", driveUrl, true);
+    xhr.responseType = "blob";
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const mimeType = xhr.response.type;
+            const url = URL.createObjectURL(xhr.response);
+            if (mimeType.startsWith('image/')) {
+                displayImage(url, imgElement);
+            } else {
+                console.error('Unsupported file type:', mimeType);
+            }
+        } else {
+            console.error(`Error: ${xhr.status}`);
+        }
+    };
+    xhr.onerror = function () {
+        console.error("Network error while retrieving the file.");
+    };
+    xhr.send();
 }
 
-function displayImage(url) {
-    const mediaContainer = document.getElementById('mediaContainerWrapper');
-    mediaContainer.innerHTML = '';  // Clear the container
-    const img = document.createElement('img');
-          img.src = url;
-          img.alt = "Loaded Image";
-          img.style.maxWidth = "100%";
-          mediaContainer.appendChild(img);
+function displayImage(url, imgElement) {
+    imgElement.src = url;
+    imgElement.alt = "Course Thumbnail";
 }
+
+
+// async function loadDriveFile(fileId) {
+//     // const apiKey = 'AIzaSyCIcIXGfsI8NMtAuDmDnOxNNVLkiSKc4Hk'; // Replace with your actual API key
+//     const driveUrl = await getFileUrl(fileId);//`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
+    
+//     const xhr = new XMLHttpRequest();
+//           xhr.open("GET", driveUrl, true);
+//           xhr.responseType = "blob";  // Fetch as binary large object (Blob)
+//           xhr.onload = function () {
+//                 if (xhr.status === 200) {
+//                     const mimeType = xhr.response.type;  // Get the MIME type of the file
+//                     const url = URL.createObjectURL(xhr.response);  // Create a URL for the file
+                    
+//                     // Determine if it's an image or a video
+//                     if (mimeType.startsWith('image/')) {
+//                         displayImage(url);
+//                         alert("check the display url: "+url);
+//                         return url;
+//                     // } else if (mimeType.startsWith('video/')) {
+//                     //     // displayVideo(url);
+//                     // } else {
+//                     //     console.error('Unsupported file type:', mimeType);
+//                     }
+//                 } else {
+//                     console.error(`Error: ${xhr.status}`);
+//                 }
+//           };
+//           xhr.onerror = function () {
+//             console.error("Network error while retrieving the file.");
+//           };
+//           xhr.send();
+// }
+
+// function displayImage(url) {
+//     const mediaContainer = document.getElementById('mediaContainerWrapper');
+//     mediaContainer.innerHTML = '';  // Clear the container
+//     const img = document.createElement('img');
+//           img.src = url;
+//           img.alt = "Loaded Image";
+//           img.style.maxWidth = "100%";
+//           mediaContainer.appendChild(img);
+// }
 
 function extractFileId(url) {
   const regex = /\/d\/(.*?)\/view/;

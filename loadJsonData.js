@@ -34,8 +34,8 @@ function displayData(courseData) {
         // Add a thumbnail image
         const thumbnail_Id=extractFileId(course.thumbnail_id);
         const thumbnail_img=loadDriveFile(thumbnail_Id);
-        const thumbnail_img = document.createElement("img");
-        thumbnail.src = thumbnail_img;//"https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
+        const thumbnail = document.createElement("img");
+        thumbnail.src = thumbnail_image;//"https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
         thumbnail.alt = "Course Thumbnail";
         thumbnail.className = "course-thumbnail";
         

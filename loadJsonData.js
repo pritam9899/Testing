@@ -32,8 +32,10 @@ function displayData(courseData) {
         card.className = "course-card";
 
         // Add a thumbnail image
-        const thumbnail = document.createElement("img");
-        thumbnail.src = "https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
+        const thumbnail_Id=extractFileId(course.thumbnail_id);
+        const thumbnail_img=loadDriveFile(thumbnail_Id);
+        const thumbnail_img = document.createElement("img");
+        thumbnail.src = thumbnail_img;//"https://i0.wp.com/www.powerbi-influential.com/wp-content/uploads/2022/05/power-bi-april-features.png?res";
         thumbnail.alt = "Course Thumbnail";
         thumbnail.className = "course-thumbnail";
         
@@ -45,7 +47,7 @@ function displayData(courseData) {
         // Add course description
         const description = document.createElement("p");
         description.className = "course-description";
-        description.textContent = course.description+"\n"+extractFileId(course.thumbnail_id);
+        description.textContent = course.description+"\n";
         
         // Add fee with discount (if applicable)
         const fee = document.createElement("p");
@@ -77,12 +79,9 @@ function displayData(courseData) {
     });
 }
 
-function displayMedia(){
 
-}
-
-async function getFileUrl(fileURL) {
-    const fileId='1O0KOee9k2JTOt0JLjxnjcfJZ-VCUxOPF';
+async function getFileUrl(fileId) {
+    // const fileId='1O0KOee9k2JTOt0JLjxnjcfJZ-VCUxOPF';
     const scriptUrl = 'https://script.google.com/macros/s/AKfycbzHWOZhn1r6CxXTOgX4CYoaXjUtzEXLF9hrUlWEY5Jv2vSmBDvurk4MYWbfvxZezNz8Uw/exec';
 
     try {
@@ -90,12 +89,41 @@ async function getFileUrl(fileURL) {
             if (!response.ok) throw new Error('Network response was not ok.');
                 
             const data = await response.json();
-            document.getElementById("fileUrl").innerText = data.url;
+            // document.getElementById("fileUrl").innerText = data.url;
             return data.url;
     } catch (error) {
             console.error('Error fetching file URL:', error);
             document.getElementById("fileUrl").innerText = 'Error fetching file URL.';
     }
+}
+
+async function loadDriveFile(fileId) {
+    // const apiKey = 'AIzaSyCIcIXGfsI8NMtAuDmDnOxNNVLkiSKc4Hk'; // Replace with your actual API key
+    const driveUrl = await getFileUrl(fileId);//`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
+    const xhr = new XMLHttpRequest();
+          xhr.open("GET", driveUrl, true);
+          xhr.responseType = "blob";  // Fetch as binary large object (Blob)
+          xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const mimeType = xhr.response.type;  // Get the MIME type of the file
+                    const url = URL.createObjectURL(xhr.response);  // Create a URL for the file
+                    return url;
+                    // // Determine if it's an image or a video
+                    // if (mimeType.startsWith('image/')) {
+                    //     // displayImage(url);
+                    // } else if (mimeType.startsWith('video/')) {
+                    //     // displayVideo(url);
+                    // } else {
+                    //     console.error('Unsupported file type:', mimeType);
+                    // }
+                } else {
+                    console.error(`Error: ${xhr.status}`);
+                }
+          };
+          xhr.onerror = function () {
+            console.error("Network error while retrieving the file.");
+          };
+          xhr.send();
 }
 
 function displayImage(url) {
@@ -113,6 +141,8 @@ function extractFileId(url) {
   const match = url.match(regex);
   return match ? match[1] : null;
 }
+
+
 
 // function displayVideo(url) {
 //     const mediaContainer = document.getElementById('mediaContainerWrapper');
